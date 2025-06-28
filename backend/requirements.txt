@@ -5,6 +5,8 @@ psycopg2-binary
 pyodbc
 python-dotenv
 pydantic
-passlib[bcrypt]
 python-jose[cryptography]
 python-multipart
+bcrypt==4.0.1
+passlib>=1.7.4
+
