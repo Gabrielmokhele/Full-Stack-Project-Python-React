@@ -76,9 +76,8 @@ const Form = () => {
 
     if (response.ok) {
       setToken(data.access_token);
-      setUser(data.user.email, data.user.id);
+      setUser({ email: data.user.email, id: data.user.id }); 
       localStorage.setItem("token", data.access_token);
-      localStorage.setItem("user", data.user.email);
       navigate(`/Profile/${data.user.id}`);
     } else {
       alert(data.detail || "Login failed");

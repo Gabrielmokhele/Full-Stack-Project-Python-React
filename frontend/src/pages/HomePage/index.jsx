@@ -1,7 +1,5 @@
 import { Box, useMediaQuery } from "@mui/material";
 import {  useEffect, useState } from "react";
-import MyPostWidget from "widgets/MyPostWidget";
-import PostsWidget from "widgets/PostsWidget";
 import PostWidget from "widgets/PostWidget";
 
 
@@ -35,10 +33,10 @@ const HomePage = () => {
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
         </Box>
         <Box
-          flexBasis={isNonMobileScreens ? "42%" : undefined}
+          flexBasis={isNonMobileScreens ? "60%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <MyPostWidget />
+          
           {posts.map((post) => (
             <PostWidget key={post.id} {...post} />
           ))}

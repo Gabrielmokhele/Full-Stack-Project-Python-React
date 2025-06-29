@@ -1,6 +1,5 @@
 import React, { createContext, useState, useMemo, useEffect } from "react";
 
-
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -14,19 +13,38 @@ export const AuthProvider = ({ children }) => {
     const savedMode = localStorage.getItem("mode");
 
     if (savedToken) setToken(savedToken);
+
     if (savedUser) {
       try {
-        const parsedUser = JSON.parse(savedUser);
-        setUser(parsedUser);
+        setUser(JSON.parse(savedUser)); 
       } catch {
         setUser(savedUser);
       }
     }
+
     if (savedMode) setMode(savedMode);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("mode", mode);
+    if (token) {
+      localStorage.setItem("token", token);
+    } else {
+      localStorage.removeItem("token");
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
+      localStorage.removeItem("user");
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (mode) {
+      localStorage.setItem("mode", mode);
+    }
   }, [mode]);
 
   const value = useMemo(
@@ -41,9 +59,5 @@ export const AuthProvider = ({ children }) => {
     [user, mode, token]
   );
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -27,7 +27,7 @@ import { AuthContext } from "context/AuthContext";
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const navigate = useNavigate();
-  const { user, setUser, mode, setMode } = useContext(AuthContext); 
+  const { user, setUser, mode, setMode } = useContext(AuthContext);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
@@ -37,27 +37,37 @@ const Navbar = () => {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
-  const fullName = user ? `${user.email} ${user.lastName}` : "Email";
-
   const handleModeToggle = () => {
     setMode(mode === "light" ? "dark" : "light");
   };
 
-  
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    navigate("/"); 
+    localStorage.removeItem("mode");
+    navigate("/");
   };
 
   const handleLogin = () => {
-  navigate("/login");
-};
+    navigate("/login");
+  };
 
-const handleRegister = () => {
-  navigate("/register");
-};
+  const handleRegister = () => {
+    navigate("/register");
+  };
+
+  // Handle select change
+  const handleSelectChange = (event) => {
+    const value = event.target.value;
+    if (value === "logout") {
+      handleLogout();
+    } else if (value === "login") {
+      handleLogin();
+    } else if (value === "register") {
+      handleRegister();
+    }
+  };
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -66,7 +76,7 @@ const handleRegister = () => {
           fontWeight="bold"
           fontSize="clamp(1rem, 2rem, 2.25rem)"
           color="primary"
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/")}
           sx={{
             "&:hover": {
               color: primaryLight,
@@ -104,9 +114,10 @@ const handleRegister = () => {
           <Message sx={{ fontSize: "25px" }} />
           <Notifications sx={{ fontSize: "25px" }} />
           <Help sx={{ fontSize: "25px" }} />
-          <FormControl variant="standard" value={fullName}>
+          <FormControl variant="standard">
             <Select
-              value={fullName}
+              value={user ? "logout" : "login"}
+              onChange={handleSelectChange}
               sx={{
                 backgroundColor: neutralLight,
                 width: "150px",
@@ -121,10 +132,16 @@ const handleRegister = () => {
                 },
               }}
               input={<InputBase />}
+              renderValue={() => user?.email || "Email"}
             >
-              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-              <MenuItem onClick={handleLogin}>Log In</MenuItem>
-              <MenuItem onClick={handleRegister}>Register</MenuItem>
+              {user ? (
+                  <MenuItem value="logout" onClick={handleLogout}>Log Out</MenuItem>
+                ) : (
+                  <>
+                    <MenuItem value="login" onClick={handleLogin}>Log In</MenuItem>
+                    <MenuItem value="register" onClick={handleRegister}>Register</MenuItem>
+                  </>
+                )}
             </Select>
           </FormControl>
         </FlexBetween>
@@ -173,9 +190,10 @@ const handleRegister = () => {
             <Message sx={{ fontSize: "25px" }} />
             <Notifications sx={{ fontSize: "25px" }} />
             <Help sx={{ fontSize: "25px" }} />
-            <FormControl variant="standard" value={fullName}>
+            <FormControl variant="standard">
               <Select
-                value={fullName}
+                value={user ? "logout" : "login"}
+                onChange={handleSelectChange}
                 sx={{
                   backgroundColor: neutralLight,
                   width: "150px",
@@ -190,10 +208,16 @@ const handleRegister = () => {
                   },
                 }}
                 input={<InputBase />}
+                renderValue={() => user?.email || "Email"}
               >
-                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
-                <MenuItem onClick={handleLogin}>Log In</MenuItem>
-              <MenuItem onClick={handleRegister}>Register</MenuItem>
+                {user ? (
+                  <MenuItem value="logout" onClick={handleLogout}>Log Out</MenuItem>
+                ) : (
+                  <>
+                    <MenuItem value="login" onClick={handleLogin}>Log In</MenuItem>
+                    <MenuItem value="register" onClick={handleRegister}>Register</MenuItem>
+                  </>
+                )}
               </Select>
             </FormControl>
           </FlexBetween>
