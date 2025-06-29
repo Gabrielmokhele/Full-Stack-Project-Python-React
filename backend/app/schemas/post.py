@@ -4,6 +4,7 @@ from uuid import UUID
 from app.schemas.user import UserRead
 
 
+
 class PostBase(BaseModel):
     title: str
     content: str
@@ -24,3 +25,7 @@ class PostWithOwner(PostRead):
 
     class Config:
         from_attributes = True
+
+
+
+PostWithOwner.model_rebuild()
