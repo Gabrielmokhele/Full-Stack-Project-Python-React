@@ -27,7 +27,7 @@ import { AuthContext } from "context/AuthContext";
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const navigate = useNavigate();
-  const { user, setUser, mode, setMode } = useContext(AuthContext);
+  const { user, setUser, mode, setMode, setToken } = useContext(AuthContext);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
 
   const theme = useTheme();
@@ -43,6 +43,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     setUser(null);
+    setToken(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("mode");

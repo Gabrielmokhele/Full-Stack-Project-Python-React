@@ -5,17 +5,11 @@ import PostWidget from "./PostWidget";
 import { Typography } from "@mui/material";
 
 const PostsWidget = () => {
-  const { token } = useContext(AuthContext);
-  const [posts, setPosts] = useState([]);
+  const { token, posts, setPosts} = useContext(AuthContext);
   const [filteredPosts, setFilteredPosts] = useState(null);
 
    useEffect(() => {
     const getAllPosts = async () => {
-      if (!token) {
-        setPosts([]);
-        setFilteredPosts(null);
-        return;
-      }
 
       try {
         const response = await fetch("http://localhost:8000/posts", {
@@ -31,7 +25,7 @@ const PostsWidget = () => {
     };
 
     getAllPosts();
-  }, [token]);
+  }, [token, posts, setPosts]);
 
 
   const handleFilteredPosts = (filtered) => {
@@ -77,8 +71,8 @@ const PostsWidget = () => {
           />
         ))
       ) : (
-        <Typography variant="body1" sx={{ mt: 2 }}>
-          No posts found.
+        <Typography variant="h6" sx={{ mt: 2, color: "text.secondary", fontStyle: "italic", }} >
+          No posts found. Try creating one or adjusting your filters.
         </Typography>
       )}
     </>

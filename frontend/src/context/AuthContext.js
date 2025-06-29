@@ -6,6 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [mode, setMode] = useState("light");
   const [token, setToken] = useState(null);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
@@ -47,16 +48,24 @@ export const AuthProvider = ({ children }) => {
     }
   }, [mode]);
 
+  useEffect(() => {
+    if (posts) {
+      localStorage.setItem("mode", posts);
+    }
+  }, [posts]);
+
   const value = useMemo(
     () => ({
       user,
       setUser,
+      posts,
+      setPosts,
       mode,
       setMode,
       token,
       setToken,
     }),
-    [user, mode, token]
+    [user, mode, token, posts]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

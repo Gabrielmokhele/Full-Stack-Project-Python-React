@@ -145,7 +145,6 @@ const PostActionsDialog = ({ post, onDeleteSuccess, onEditSuccess }) => {
         </DialogActions>
       </Dialog>
 
-      {/* Delete Dialog */}
       <Dialog open={openDelete} onClose={() => setOpenDelete(false)}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
