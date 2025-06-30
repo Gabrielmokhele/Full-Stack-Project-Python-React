@@ -55,6 +55,8 @@ Full-Stack-Project-Python-React/
 - `JWT` for secure authentication
 - `Material UI` for modern styling
 - `Docker Compose` for full-stack orchestration
+- `Formik` for robust form state management
+- `Yup` for schema-based form validation
 
 ## Usage
 
