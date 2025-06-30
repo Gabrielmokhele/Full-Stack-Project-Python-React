@@ -67,6 +67,7 @@ const PostsWidget = () => {
             postUserId={post.owner_id}
             title={post.title}
             content={post.content}
+            ownerEmail={post.owner?.email}
             onPostDeleted={handleDeletePost}
             onPostEdited={handleEditPost}
           />

@@ -2,9 +2,6 @@ import { Box, useMediaQuery } from "@mui/material";
 import {  useEffect, useState } from "react";
 import PostWidget from "widgets/PostWidget";
 
-const API_URL = process.env.REACT_APP_BACKEND_URL
-
-console.log(API_URL)
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -41,7 +38,7 @@ const HomePage = () => {
         >
           
           {posts.map((post) => (
-            <PostWidget key={post.id} {...post} />
+            <PostWidget key={post.id} ownerEmail={post.owner?.email} {...post} />
           ))}
         </Box>
         {isNonMobileScreens && (

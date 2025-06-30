@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from uuid import UUID
-from app.schemas.post import PostCreate, PostRead
+from app.schemas.post import PostCreate, PostRead, PostWithOwner
 from app.models.post import Post
 from app.services.database import get_db
 from app.dependencies import get_current_user
 from app.models.user import User
+
 
 router = APIRouter()
 
@@ -17,9 +18,9 @@ def create_post(post_in: PostCreate, db: Session = Depends(get_db), user: User =
     db.refresh(post)
     return post
 
-@router.get("/posts", response_model=list[PostRead])
+@router.get("/posts", response_model=list[PostWithOwner])
 def get_all_posts(db: Session = Depends(get_db)):
-    return db.query(Post).all()
+    return db.query(Post).options(joinedload(Post.owner)).all()
 
 @router.get("/posts/{post_id}", response_model=PostRead)
 def get_post(post_id: UUID, db: Session = Depends(get_db)):

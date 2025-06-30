@@ -22,11 +22,12 @@ import PostActionsDialog from "./PostActionsDialog";
 const PostWidget = ({
   postId,
   postUserId,
+  ownerEmail,
   title,
   content,
   likes = {},
   comments = [],
-  onPostDeleted, 
+  onPostDeleted,
   onPostEdited
 }) => {
   const { user } = useContext(AuthContext);
@@ -35,7 +36,7 @@ const PostWidget = ({
   const [localComments, setLocalComments] = useState(comments);
   const [localLikes, setLocalLikes] = useState(likes);
   const [newComment, setNewComment] = useState("");
-  const post = { id: postId, owner_id: postUserId, title, content };
+  const post = { id: postId, title, content, owner_id: postUserId, ownerEmail };
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
@@ -82,7 +83,7 @@ const PostWidget = ({
     if (!newComment.trim()) return;
 
     const newCommentObj = {
-      id: Date.now().toString(), 
+      id: Date.now().toString(),
       text: newComment.trim(),
       likes: {},
     };
@@ -97,7 +98,7 @@ const PostWidget = ({
         <Typography variant="h6" fontWeight="bold">
           {title}
         </Typography>
-         <PostActionsDialog
+        <PostActionsDialog
           post={post}
           onDeleteSuccess={onPostDeleted}
           onEditSuccess={onPostEdited}
@@ -107,7 +108,11 @@ const PostWidget = ({
         {content}
       </Typography>
 
-      
+
+      <Typography variant="caption" color="text.secondary">
+        Posted by: {ownerEmail}
+      </Typography>
+
 
       <FlexBetween mt="0.75rem">
         <FlexBetween gap="1rem">
@@ -187,7 +192,7 @@ const PostWidget = ({
           <Divider />
         </Box>
       )}
-      
+
     </WidgetWrapper>
   );
 };
