@@ -5,8 +5,9 @@ import PostWidget from "./PostWidget";
 import { Typography } from "@mui/material";
 
 const PostsWidget = () => {
-  const { token, posts, setPosts} = useContext(AuthContext);
+  const { token, } = useContext(AuthContext);
   const [filteredPosts, setFilteredPosts] = useState(null);
+  const [posts, setPosts] = useState([])
 
    useEffect(() => {
     const getAllPosts = async () => {
@@ -25,7 +26,7 @@ const PostsWidget = () => {
     };
 
     getAllPosts();
-  }, [token, posts, setPosts]);
+  }, [token]);
 
 
   const handleFilteredPosts = (filtered) => {

@@ -64,13 +64,13 @@ const PostActionsDialog = ({ post, onDeleteSuccess, onEditSuccess }) => {
       if (res.ok) {
         setTimeout(() => {
           onDeleteSuccess(post.id);
-        }, 1500);
+        }, 2000);
         setAlert("Post deleted successfully!");
-        setTimeout(() => setAlert(""), 3000);
+        setTimeout(() => setAlert(""), 3500);
         setOpenDelete(false);
       } else {
         setAlert("Failed to delete post.");
-        setTimeout(() => setAlert(""), 3000);
+        setTimeout(() => setAlert(""), 3500);
       }
     } catch (err) {
       console.error("Delete failed", err);
