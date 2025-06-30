@@ -10,7 +10,7 @@ import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
 import { AuthContext } from "context/AuthContext";
 
-const MyPostWidget = ({ onPostCreated }) => {
+const MyPostWidget = ({ onPostCreated, userId }) => {
   const { user, token } = useContext(AuthContext);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
